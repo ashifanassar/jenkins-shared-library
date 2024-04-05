@@ -6,7 +6,7 @@ def lintChecks() {
 
 
 
-def call() {
+def call(COMPONENT) {
     pipeline { 
     agent {
         label 'ws'
@@ -15,6 +15,7 @@ def call() {
         stage('Lint Checks') {
             steps {
                 script {
+                    sh "echo performing lintchecks for $COMPONENT"
                     lintChecks()
                 }
             }
