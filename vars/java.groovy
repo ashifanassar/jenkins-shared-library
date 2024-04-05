@@ -7,22 +7,21 @@ def lintchecks() {
 
 def call(COMPONENT) {
     pipeline { 
-    agent {
-        label 'ws'
-    }
-    stages {
-        stage('Lint Checks') {
-            steps {
-                script {
-                    sh "echo performing lintchecks for $COMPONENT"
-                    lintChecks()
+        agent any
+        stages {
+            stage('Lint Checks') {
+                steps {
+                    script {
+                        lintchecks()
+                    }
+                }
+            }
+
+            stage('Static Code Analysis') {
+                steps {
+                    sh "echo Static Checks ...."
                 }
             }
         }
-        stage('Static Code Analysis') {
-            steps {
-                sh "echo Static Checks ...."
-            }
-        }
     }
-}}
+}
