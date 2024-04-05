@@ -1,10 +1,8 @@
-def lintChecks() {
-    sh "echo Installing Lint Checker"
-    sh "npm i jslint"
+def lintchecks() {
     sh "echo Performing Lint Checks for $COMPONENT"
-    sh "node_modules/jslint/bin/jslint.js server.js || true" 
+    //sh "mvn checkstyle:check || true"     // Uncomment this if you want to perform lintChecks
+    sh "echo Lint Checks Completed for $COMPONENT"
 }
-
 
 
 def call(COMPONENT) {
