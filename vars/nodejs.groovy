@@ -14,8 +14,9 @@ def call() {
     stages {
         stage('Lint Checks') {
             steps {
-                nodejs.lintChecks()
-
+                script {
+                    lintChecks()
+                }
             }
         }
         stage('Static Code Analysis') {
