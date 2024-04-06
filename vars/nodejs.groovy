@@ -28,7 +28,9 @@ def call(COMPONENT) {
         }
         stage('Static Code Analysis') {
             steps {
-                sh "echo Static Checks ...."
+                script {
+                    sonarchecks()
+                }
             }
         }
     }
