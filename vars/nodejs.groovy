@@ -7,7 +7,7 @@ def lintChecks() {
 def sonarchecks() {
     sh '''
         echo sonar check start on the $COMPONENT
-        sonar-scanner \-Dsonar.projectKey=${COMPONENT} \-Dsonar.host.url=http://34.227.14.107:9000 \-Dsonar.sources=. \-Dsonar.login=admin \-Dsonar.password=password \-Dsonar.verbose=true
+        sonar-scanner -Dsonar.projectKey=${COMPONENT} -Dsonar.host.url=http://34.227.14.107:9000 -Dsonar.sources=. -Dsonar.login=admin -Dsonar.password=password -Dsonar.verbose=true
         echo sonar checks starting on the $COMPONENT is completed
     '''
 }
