@@ -17,6 +17,7 @@ def call(COMPONENT) {
                     sh "echo performing lintchecks for $COMPONENT"
                     lintChecks()
                 }
+                sh "env"
             }
         }
         stage('Static Code Analysis') {
