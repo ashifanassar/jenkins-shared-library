@@ -1,18 +1,18 @@
 def lintchecks() {
-        sh "echo Performing Lint Checks for $COMPONENT"
+        sh "echo Performing Lint Checks for payment"
         // sh "pip3 install pylint && pylint *.py"
-        sh "echo Style Checks Completed $COMPONENT"
+        sh "echo Style Checks Completed payment"
 }
 
 def sonarchecks() {
     sh ''' 
-        echo Sonar Checks Starting for $COMPONENT
-        sonar-scanner -Dsonar.projectKey=${COMPONENT} -Dsonar.host.url=http://${NEXUS_URL}:9000 ${ARGS} -Dsonar.sources=. -Dsonar.login=admin -Dsonar.password=password
-        echo Sonar Checks Starting for $COMPONENT is Completed
+        echo Sonar Checks Starting for payment
+        sonar-scanner -Dsonar.projectKey=payment -Dsonar.host.url=http://${NEXUS_URL}:9000 ${ARGS} -Dsonar.sources=. -Dsonar.login=admin -Dsonar.password=password
+        echo Sonar Checks Starting for payment is Completed
      '''
 }
 
-def call(COMPONENT) {
+def call(payment) {
     pipeline { 
     agent any
     environment {
@@ -22,7 +22,7 @@ def call(COMPONENT) {
         stage('Lint Checks') {
             steps {
                 script {
-                    sh "echo performing lintchecks for $COMPONENT"
+                    sh "echo performing lintchecks for payment"
                     lintChecks()
                 }
                 sh "env"
