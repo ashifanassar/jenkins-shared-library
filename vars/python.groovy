@@ -1,9 +1,8 @@
 def lintchecks() {
-        sh "echo Performing Lint Checks for ${COMPONENT}"
+        sh "echo Performing Lint Checks for $COMPONENT"
         // sh "pip3 install pylint && pylint *.py"
-        sh "echo Style Checks Completed ${COMPONENT}"
+        sh "echo Style Checks Completed $COMPONENT"
 }
-
 
 def call(COMPONENT) {
     pipeline { 
