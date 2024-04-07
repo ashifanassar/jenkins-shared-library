@@ -22,7 +22,7 @@ def call(COMPONENT) {
         stage('Lint Checks') {
             steps {
                 script {
-                    sh "echo performing lintchecks for p${COMPONENT}"
+                    sh "echo performing lintchecks for ${COMPONENT}"
                     lintChecks()
                 }
             }
