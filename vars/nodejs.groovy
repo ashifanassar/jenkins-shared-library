@@ -10,6 +10,7 @@ def call(COMPONENT) {
     agent any
     environment {
         NEXUS_URL="34.227.14.107"
+        SONAR_CRED  = credentials('SONAR_CRED')   // SONAR_CRED_USR , SONAR_CRED_PSW
     }
     stages {
         stage('Lint Checks') {
