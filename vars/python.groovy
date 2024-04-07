@@ -6,21 +6,25 @@ def lintchecks() {
 
 def call(COMPONENT) {
     pipeline { 
-        agent any
-        stages {
-            stage('Lint Checks') {
-                steps {
-                    script {
-                        lintchecks()
-                    }
+    agent any
+    environment {
+        NEXUS_URL="34.227.14.107"
+    }
+    stages {
+        stage('Lint Checks') {
+            steps {
+                script {
+                    sh "echo performing lintchecks for $COMPONENT"
+                    lintChecks()
                 }
             }
-
-            stage('Static Code Analysis') {
-                steps {
-                    sh "echo Static Checks ...."
+        }
+        stage('Static Code Analysis') {
+            steps {
+                script {
+                    common.sonarchecks()
                 }
             }
         }
     }
-}
+}}
