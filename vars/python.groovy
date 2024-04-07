@@ -4,6 +4,14 @@ def lintchecks() {
         sh "echo Style Checks Completed $COMPONENT"
 }
 
+def sonarchecks() {
+    sh ''' 
+        echo Sonar Checks Starting for $COMPONENT
+        sonar-scanner -Dsonar.projectKey=${COMPONENT} -Dsonar.host.url=http://${NEXUS_URL}:9000 ${ARGS} -Dsonar.sources=. -Dsonar.login=admin -Dsonar.password=password
+        echo Sonar Checks Starting for $COMPONENT is Completed
+     '''
+}
+
 def call(COMPONENT) {
     pipeline { 
     agent any
@@ -23,6 +31,7 @@ def call(COMPONENT) {
         stage('Static Code Analysis') {
             steps {
                 script {
+                    env.ARGS=" -Dsonar.sources=."
                     common.sonarchecks()
                 }
             }
