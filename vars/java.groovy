@@ -1,4 +1,4 @@
-def lintchecks() {
+def lintChecks() {
     sh "echo Performing Lint Checks for $COMPONENT"
     //sh "mvn checkstyle:check || true"     // Uncomment this if you want to perform lintChecks
     sh "echo Lint Checks Completed for $COMPONENT"

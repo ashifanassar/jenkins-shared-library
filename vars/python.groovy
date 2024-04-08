@@ -1,4 +1,4 @@
-def lintchecks() {
+def lintChecks() {
         sh "echo Performing Lint Checks for $COMPONENT"
         // sh "pip3 install pylint && pylint *.py"
         sh "echo Style Checks Completed $COMPONENT"
