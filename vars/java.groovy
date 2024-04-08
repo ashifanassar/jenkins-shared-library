@@ -8,6 +8,9 @@ def lintChecks() {
 def call(COMPONENT) {
     pipeline { 
     agent any
+    environment {
+        NEXUS_URL="172.31.80.115"
+    }
     stages {
         stage('Lint Checks') {
             steps {
@@ -17,9 +20,16 @@ def call(COMPONENT) {
                 }
             }
         }
+        stage('compile the java script')
+            steps {
+                sh "mvn clean compile"
+                sh "ls -lt target/"
+            }
         stage('Static Code Analysis') {
             steps {
                 sh "echo static checks"
+                env.ARGS="-Dsonar.java.binaries=./target/"
+                common.sonarchecks()
                 }
             }
         }
