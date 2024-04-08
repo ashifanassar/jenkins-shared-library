@@ -20,16 +20,18 @@ def call(COMPONENT) {
                 }
             }
         }
-        stage('compile the java script')
+        stage('compile the java script') {
             steps {
                 sh "mvn clean compile"
                 sh "ls -lt target/"
             }
+        }
         stage('Static Code Analysis') {
             steps {
-                sh "echo static checks"
-                env.ARGS="-Dsonar.java.binaries=./target/"
-                common.sonarchecks()
+                    script {
+                        env.ARGS="-Dsonar.java.binaries=./target/"
+                        common.sonarchecks()
+                    }
                 }
             }
         }
