@@ -41,6 +41,28 @@ def call(COMPONENT) {
             steps {
                     sh "echo Testing in progress"
             }
+            }
+        stage("Testing") {
+            parallel {
+                stage("Unit Testing") {
+                    steps {
+                        sh "echo Unit Testing In Progress"
+                        //sh "npm test"
+                        sh "sleep 60"                
+                    }
+                }
+        stage("Integration Testing") {
+            steps {
+                sh "echo Integration Testing In Progress"
+                        //sh "npm verify"
+                sh "sleep 60"                
+                }
+        }
+        stage("Functional Testing") {
+            steps {
+                sh "echo Functional Testing In Progress"
+                sh "sleep 60"                
+                }
         }
     }
 }}
