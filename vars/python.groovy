@@ -21,14 +21,26 @@ def call(COMPONENT) {
                 sh "env"
             }
         }
-            stage('Static Code Analysis') {
-                steps {
-                    script {
-                        env.ARGS=" -Dsonar.sources=."
-                        common.sonarchecks()
+    stage('Static Code Analysis') {
+        steps {
+            script {
+                env.ARGS=" -Dsonar.sources=."
+                common.sonarchecks()
                     }
                 }
+        }
+    stage('Get Sonar Result') {
+        steps {
+            script {
+                common.sonarresult()
+                }
             }
+        }
+    stage('Testing') {
+        steps {
+            sh "echo Testing in progress"
+            }
+        }
         }
     }
 }

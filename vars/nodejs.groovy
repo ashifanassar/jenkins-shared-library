@@ -30,11 +30,11 @@ def call(COMPONENT) {
             }
         }
 
-         stage('Sonar Result') {
+        stage('Get Sonar Result') {
             steps {
-                    sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/sonar-scanner/sonar-quality-gate? > gate.sh"
-                    sh "bash gate.sh ${SONAR_CRED_USR} ${SONAR_CRED_PSW} ${NEXUS_URL} ${COMPONENT}"
-                    sh "echo SCAN Looks Good"
+                script {
+                    common.sonarresult()
+                }
                 }
         }
         stage('Testing') {
