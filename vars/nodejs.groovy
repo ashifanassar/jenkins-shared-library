@@ -29,5 +29,12 @@ def call(COMPONENT) {
                 }
             }
         }
+        stage('Testing') {
+            steps {
+                script {
+                    sh "echo Testing in progress"
+                }
+            }
+        }
     }
 }}
