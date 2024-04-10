@@ -38,8 +38,9 @@ def call(COMPONENT) {
                 }
         }
 
-        stage("TMaking artifact") {
+        stage("Making artifact") {
             steps {
+                sh "env"
                 sh "echo preparing artifacts"
             }
         }
