@@ -37,6 +37,13 @@ def call(COMPONENT) {
                 }
                 }
         }
+        stage("Testing") {
+            steps {
+                script {
+                    common.testcases()
+                    }
+                }
+            }
 
         stage("Making artifact") {
             steps {
