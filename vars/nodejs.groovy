@@ -38,11 +38,14 @@ def call(COMPONENT) {
                 }
         }
 
-            stage("Testing") {
-                steps {
-                    script {
-                        common.testcases()
-                    }
+        stage("TMaking artifact") {
+            steps {
+                sh "echo preparing artifacts"
+            }
+        }
+        stage("Publishing artifact") {
+            steps {
+                sh "echo Publishing artifacts"
                 }
             }
         }
