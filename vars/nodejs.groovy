@@ -45,28 +45,30 @@ def call(COMPONENT) {
                 }
             }
 
-        stage("Making artifact") {
-        when { 
-            expression { env.TAG_NAME != null  } 
-        }
-            steps {
-                sh '''
-                    npm install
-                    zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
-                '''
+            stage("Making Artifact") {
+            when { 
+                expression { env.TAG_NAME != null  } 
             }
-        }
-        stage("Publishing artifact") {
-        when { 
-            expression { env.TAG_NAME != null  } 
+                steps {
+                    sh ''' 
+                        npm install 
+                        zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js 
+                    '''
+                }
             }
-            steps {
 
-                sh '''
-                    echo Publishing artifacts   
-                    curl -f -v -u admin:password --upload-file ${COMPONENT}-${TAG_NAME} http://172.31.43.143:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
-                '''
-                    }
+            // Should Only Run Against A Tag
+            stage("Publishing Artifact") {
+            when { 
+                expression { env.TAG_NAME != null  } 
+            }
+                steps {
+                    sh '''
+                        echo Publishing Artifacts
+                        curl -f -v -u admin:password --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.43.143:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
+                    '''
+
+                }
             }
         }
     }
