@@ -57,15 +57,16 @@ def call(COMPONENT) {
             }
         }
         stage("Publishing artifact") {
-            steps {
             when { 
                 expression { env.TAG_NAME != null  } 
             }
-                sh '''
-                    echo Publishing artifacts   
-                    curl -f -v -u admin:password --upload-file ${COMPONENT}-${TAG_NAME} http://172.31.43.143:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
-                '''
-                }
+                steps {
+
+                    sh '''
+                        echo Publishing artifacts   
+                        curl -f -v -u admin:password --upload-file ${COMPONENT}-${TAG_NAME} http://172.31.43.143:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
+                    '''
+                    }
             }
         }
     }
