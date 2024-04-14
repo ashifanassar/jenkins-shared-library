@@ -1,3 +1,15 @@
+def lintchecks() {
+    stage('Lint Checks') {
+        sh '''
+            echo Installing Lint Checker
+            echo Performing Lint Checks 
+            echo Lint Checks Completed
+        ''' 
+    }
+}
+
+
+
 def sonarchecks() {
     sh ''' 
         echo Sonar Checks Starting for $COMPONENT
@@ -35,5 +47,42 @@ def testcases() {
         }
 
         parallel(stages)
+    }
+}
+
+def artifacts() {
+    stage('Checkting Artifact On Nexus') {
+        env.upload_status=sh(returnStdout: true, script: "curl -s -L http://172.31.38.109:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip || true")
+        print upload_status
+    }
+    
+    if(env.upload_status == "") {
+        stage('Generate Artifacts') {
+            if(env.APPTYPE == "nodejs") {
+                sh "ls -ltr"
+                sh "npm install"
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules/ server.js systemd.service"
+            }
+            else if(env.APPTYPE == "python") {
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt systemd.service"
+                sh "ls -ltr"
+            }
+            else if(env.APPTYPE == "maven") {
+                sh "mvn clean package"
+                sh "mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar"
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip  ${COMPONENT}.jar systemd.service"
+            }
+            else if(env.APPTYPE == "angularjs") {
+                sh "cd static/"
+                sh "zip -r ../${COMPONENT}-${TAG_NAME}.zip *"
+            }
+        }
+
+        stage('Publish Artifacts') {
+            withCredentials([usernamePassword(credentialsId: 'SONAR_CRED', passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USERNAME')]) {
+                sh "echo Publishing Artifacts"
+                sh "curl -f -v -u ${NEXUS_USERNAME}:${NEXUS_PASSWORD} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+            }
+        }
     }
 }

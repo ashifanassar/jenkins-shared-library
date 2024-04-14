@@ -11,57 +11,57 @@ def call() {
     }
 }
 
+// def lintchecks() {
+//     sh '''
+//         echo Installing Lint Checker
+//         npm i jslint
+//         echo Performing Lint Checks for $COMPONENT
+//         node_modules/jslint/bin/jslint.js server.js || true
+//     ''' 
+// }
 
 // def call(COMPONENT) {
 //     pipeline { 
-//     agent any
-//     environment {
-//         NEXUS_URL="3.83.189.125"
-//         SONAR_CRED  = credentials('SONAR_CRED')   // SONAR_CRED_USR , SONAR_CRED_PSW
-//     }
-//     stages {
-//         stage('Lint Checks') {
-//             steps {
-//                 script {
-//                     sh "echo performing lintchecks for $COMPONENT"
-//                     lintChecks()
-//                 }
-//             }
+//         agent any
+//         environment {
+//             NEXUS_URL = "172.31.38.109"
+//             SONAR_CRED  = credentials('SONAR_CRED')
 //         }
-//         stage('Static Code Analysis') {
-//             steps {
-//                 script {
-//                     env.ARGS=" -Dsonar.sources=."
-//                     common.sonarchecks()
-//                 }
-//             }
-//         }
-
-//         stage('Get Sonar Result') {
-//             steps {
-//                 script {
-//                     common.sonarresult()
-//                 }
-//                 }
-//         }
-//         stage("Testing") {
-//             steps {
-//                 script {
-//                     common.testcases()
-//                     }
-//                 }
-//             }
-//             stage("Checking the Release") {
-//             when { 
-//                 expression { env.TAG_NAME != null  } 
-//             }
-//                 steps { 
+//         stages {
+//             stage('Lint Checks') {
+//                 steps {
 //                     script {
-//                         common.checkrelease()
+//                         lintchecks()
 //                     }
 //                 }
 //             }
 
+//             stage('Static Code Analysis') {
+//                 steps {
+//                     script {
+//                         env.ARGS=" -Dsonar.sources=."
+//                         common.sonarchecks()
+//                     }
+//                 }
+//             }
+  
+//             stage('Get Sonar Result') {
+//                 steps {
+//                     script {
+//                         common.sonarresult()
+//                     }
+//                 }
+//             }
+
+//             stage("Testing") {
+//                 steps {
+//                     script {
+//                         common.testcases()
+//                     }
+//                 }
+//             }
+            
+//             // Should Only Run Against A Tag
 //             stage("Making Artifact") {
 //             when { 
 //                 expression { env.TAG_NAME != null  } 
@@ -82,7 +82,7 @@ def call() {
 //                 steps {
 //                     sh '''
 //                         echo Publishing Artifacts
-//                         curl -f -v -u admin:password --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.43.143:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
+//                         curl -f -v -u admin:password --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip
 //                     '''
 
 //                 }
