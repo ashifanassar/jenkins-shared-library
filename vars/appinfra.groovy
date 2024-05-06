@@ -7,7 +7,7 @@ def call() {
     ])
     node {
         ansiColor('xterm') {
-            git branch: 'main', url: "https://github.com/b57-clouddevops/${COMPONENT}.git"
+            git branch: 'main', url: "https://github.com/ashifanassar/${COMPONENT}.git"
             stage('Terraform Init') {
                 sh ''' 
                     cd mutable-infra
