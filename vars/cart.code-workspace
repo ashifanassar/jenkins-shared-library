@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"path": "../../cart"
+		},
+		{
+			"path": "../../catalogue"
+		},
+		{
+			"path": "../../frontend"
+		},
+		{
+			"path": "../../jenkins"
+		},
+		{
+			"path": "../../mongodb"
+		},
+		{
+			"path": "../../mysql"
+		},
+		{
+			"path": "../../payment"
+		},
+		{
+			"path": "../../redis"
+		},
+		{
+			"path": "../../ShellScripting"
+		},
+		{
+			"path": "../../shipping"
+		},
+		{
+			"path": "../../user"
+		},
+		{
+			"path": ".."
+		}
+	]
+}
