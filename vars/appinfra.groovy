@@ -30,8 +30,3 @@ def call() {
         }
     }
 }
-
-terrafile -f env-dev/Terrafile
-terraform init -reconfigure --backend-config=env-dev/dev-backend.tfvars
-terraform plan  --var-file=env-dev/dev.tfvars -var APP_VERSION=004
-terraform apply -auto-approve --var-file=env-dev/dev.tfvars APP_VERSION=004
